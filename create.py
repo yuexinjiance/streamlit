@@ -18,7 +18,5 @@ with st.expander("填写公司相关信息："):
         has_guessed = st.form_submit_button("开始生成")
 
 if has_guessed:
-    with st.sidebar:
-        st.header('弹窗内容')
-        st.write('这是一个弹窗的内容。')
+    st.write("正在生成数据...")
 
