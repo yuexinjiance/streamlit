@@ -1,14 +1,6 @@
 import streamlit as st
 from datetime import date
-import sys
-import os
-from tools import create_new_company_data, get_new_data, change_brand
-
-# 获取 tools 文件夹的绝对路径
-tools_path = os.path.abspath("tools")
-
-# 将 tools 文件夹所在的路径添加到 sys.path
-sys.path.append(tools_path)
+from tools import create_new_company_data, get_new_data, change_brand, change_broken
 
 st.title('越鑫检测证书生成')
 st.header("1.证书生成")
@@ -44,17 +36,35 @@ if press_create:
 
 st.header("2.品牌及型号修改")
 with st.expander("选择品牌及型号"):
-    company_name_change_brand = st.text_input('公司名称：')
-    file_num = st.text_input("编号（以空格分割，示例：1-5 6 11）")
+
     col1, col2 = st.columns([1, 1])
     with col1:
-        factory_choice = st.selectbox('制造商', options=short_name_list, key=1)
+        company_name_change_brand = st.text_input('公司名称：')
     with col2:
+        file_num = st.text_input("编号（以空格分割，示例：1-5 6 11）")
+
+    col3, col4 = st.columns([1, 1])
+    with col3:
+        factory_choice = st.selectbox('制造商', options=short_name_list, key=1)
+    with col4:
         type_option = [item['list'] for item in full_data_list if item['name'] == factory_choice][0]
         type_choice = st.selectbox('品牌', options=type_option, key=2)
+
     if st.button("更改品牌"):
         product_company_full_name = [item['fullname'] for item in full_data_list if item['name'] == factory_choice][0]
         dongzuozhi = [item['alarm'] for item in full_data_list if item['name'] == factory_choice][0]
         with st.spinner("正在更改品牌，请等待..."):
             change_brand.change_all_brand(company_name_change_brand, product_company_full_name, type_choice, dongzuozhi, file_num)
         st.success("品牌更改完毕！")
+
+st.header("3.故障探头修改")
+with st.expander("填写故障探头信息"):
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        company_name_change_broken = st.text_input('公司名称：', key='22')
+    with col2:
+        file_num_broken = st.text_input("编号（以空格分割，示例：1-5 6 12）", key='01')
+    if st.button("提交更改"):
+        with st.spinner("正在更改故障探头，请等待..."):
+            change_broken.change_all_problem_file(company_name_change_broken, file_num_broken)
+        st.success("故障探头更改完毕！")
