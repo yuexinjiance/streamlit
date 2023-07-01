@@ -1,19 +1,29 @@
 import streamlit as st
 from datetime import date
-from tools import create_new_company_data, get_new_data, change_brand, change_broken
+from tools import create_new_company_data, get_new_data, change_brand, change_broken, combine_docx_to_one_pdf
 
-st.title('越鑫检测证书生成')
-st.header("1.证书生成")
+
+st.title('越鑫检测证书生成 :sunglasses:')
+st.subheader(":one: 证书生成 :clipboard:")
 
 full_data_list, short_name_list = get_new_data.get_new_data()
 
 with st.expander("填写公司相关信息："):
     with st.form("form", True):
-        company_name = st.text_input('公司名称：')
-        all_number = st.number_input('探头数量：', step=1, format="%d")
-        selected_date = st.date_input("选择日期", date.today())
-        temperature = st.number_input('温度：', step=1, format="%d")
-        humidity = st.number_input('湿度：', step=1, format="%d")
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            company_name = st.text_input('公司名称：')
+        with col2:
+            selected_date = st.date_input("检测日期：", date.today())
+
+        col3, col4, col5 = st.columns([1,1, 1])
+        with col3:
+            all_number = st.number_input('探头数量：', step=1, format="%d")
+        with col4:
+            temperature = st.number_input('温度：', step=1, format="%d")
+        with col5:
+            humidity = st.number_input('湿度：', step=1, format="%d")
+
         setions = st.text_input('探头分布区域（空格分隔）：')
         setions_number = st.text_input('各区域探头数量（空格分隔）：')
         start_num = st.number_input('证书起始编号：', value=1, step=1, format="%d")
@@ -34,7 +44,8 @@ if press_create:
         create_new_company_data.write_save_all_company(user_input)
     st.success("证书生成完毕！")
 
-st.header("2.品牌及型号修改")
+st.text("")
+st.subheader(":two: 品牌及型号修改 :pencil:")
 with st.expander("选择品牌及型号"):
 
     col1, col2 = st.columns([1, 1])
@@ -57,7 +68,8 @@ with st.expander("选择品牌及型号"):
             change_brand.change_all_brand(company_name_change_brand, product_company_full_name, type_choice, dongzuozhi, file_num)
         st.success("品牌更改完毕！")
 
-st.header("3.故障探头修改")
+st.text("")
+st.subheader(":three: 故障探头修改 :mute:")
 with st.expander("填写故障探头信息"):
     col1, col2 = st.columns([1, 1])
     with col1:
@@ -68,3 +80,11 @@ with st.expander("填写故障探头信息"):
         with st.spinner("正在更改故障探头，请等待..."):
             change_broken.change_all_problem_file(company_name_change_broken, file_num_broken)
         st.success("故障探头更改完毕！")
+
+st.text("")
+st.subheader(":four: 证书合并 :link:")
+company_name_combine = st.text_input('公司名称：', key='12')
+if st.button("开始合并"):
+    with st.spinner("正在合并证书，请等待..."):
+        combine_docx_to_one_pdf.combine_process(company_name_combine)
+    st.success("证书合并完成！")

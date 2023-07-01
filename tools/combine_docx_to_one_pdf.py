@@ -24,8 +24,7 @@ def combine_process(factory_name):
 
     merger.write(fr"{factory_name}最终PDF合并版.pdf")
     merger.close()
-    messagebox.showinfo(title='合并完成', message='文件合并已完成!')
 
 
 if __name__ == "__main__":
-    combine_process("绍兴鑫沃工程有限公司")
+    combine_process("绍兴鑫沃有限公司")
