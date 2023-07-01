@@ -1,6 +1,17 @@
 import streamlit as st
 from datetime import date
-import time
+from tools import create_new_company_data
+
+user_input = {
+    "company_name": "绍兴鑫沃电子有限公司",
+    "all_nums": 10,
+    "date": "20230614",
+    "temperature": 30,
+    "humidity": 35,
+    "sections": ["厨房", "大厅"],
+    "sections_num": [3, 7],
+    "start_num": 7
+}
 
 st.title('越鑫检测证书生成')
 st.header("1.证书生成")
@@ -19,6 +30,6 @@ with st.expander("填写公司相关信息："):
 
 if has_guessed:
     with st.spinner("正在生成证书，请等待..."):
-        time.sleep(5)
+        create_new_company_data.write_save_all_company(user_input)
     st.success("证书生成完毕！")
 
