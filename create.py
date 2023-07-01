@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import date
-
+import time
 
 st.title('越鑫检测证书生成')
 st.header("1.证书生成")
@@ -18,5 +18,7 @@ with st.expander("填写公司相关信息："):
         has_guessed = st.form_submit_button("开始生成")
 
 if has_guessed:
-    st.write("正在生成数据...")
+    with st.spinner("正在生成证书，请等待..."):
+        time.sleep(5)
+    st.success("证书生成完毕！")
 
