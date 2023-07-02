@@ -1,7 +1,8 @@
 import streamlit as st
 from datetime import date
 from tools import create_new_company_data, get_new_data, change_brand, change_broken, combine_docx_to_one_pdf
-
+import pythoncom
+pythoncom.CoInitialize()
 
 st.title('越鑫检测证书生成 :sunglasses:')
 st.subheader(":one: 证书生成 :clipboard:")
@@ -24,8 +25,8 @@ with st.expander("填写公司相关信息："):
         with col5:
             humidity = st.number_input('湿度：', step=1, format="%d")
 
-        setions = st.text_input('探头分布区域（空格分隔）：')
-        setions_number = st.text_input('各区域探头数量（空格分隔）：')
+        sections = st.text_input('探头分布区域（空格分隔）：')
+        sections_number = st.text_input('各区域探头数量（空格分隔）：')
         start_num = st.number_input('证书起始编号：', value=1, step=1, format="%d")
         press_create = st.form_submit_button("开始生成")
 
@@ -36,8 +37,8 @@ if press_create:
         "date": selected_date.strftime("%Y%m%d"),
         "temperature": temperature,
         "humidity": humidity,
-        "sections": setions.strip().split(' '),
-        "sections_num": [int(num) for num in setions_number.strip().split(' ')],
+        "sections": sections.strip().split(' '),
+        "sections_num": [int(num) for num in sections_number.strip().split(' ')],
         "start_num": start_num
     }
     with st.spinner("正在生成证书，请等待..."):

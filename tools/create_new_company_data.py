@@ -65,7 +65,7 @@ def all_company_to_save(user_input):
             "company_name": company_name,
             "alert_type": "AEC2332",
             "alert_factory": "成都安可信电子股份有限公司",
-            "dongzuozhi": "ankexindongzuo",
+            "dongzuozhi": 25,
             "alert_num": all_alerts_num[i],
             "date_now": format_date(date)[0],
             "date_next": format_date(date)[1],

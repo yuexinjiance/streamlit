@@ -1,4 +1,3 @@
-from tkinter import messagebox
 # 导入PDF操作工具
 from PyPDF2 import PdfMerger
 # 导入word转换pdf工具
@@ -27,4 +26,4 @@ def combine_process(factory_name):
 
 
 if __name__ == "__main__":
-    combine_process("绍兴鑫沃有限公司")
+    combine_process("绍兴鑫沃电子有限公司")
